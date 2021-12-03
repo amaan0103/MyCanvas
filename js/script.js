@@ -16,20 +16,44 @@ $(document).ready(function(){
 	const colorElement = $("#color");
 	const clearElement = $("#clear");
 	const save = $("#save");
-	const ctx = canvas[0].getContext("2d");
-	const canvass = document.getElementById("myCanvas");
 	
-    ctx.canvas.width = window.innerWidth;
-	ctx.canvas.height = window.innerHeight;
+	const canvass = document.getElementById("myCanvas");
+	const ctx = canvass.getContext("2d");
+	
+    canvass.width = window.innerWidth;
+	canvass.height = window.innerHeight;
 	
 	//function drawStuff(){
-	save.click(()=>{
+	
+		
+		
+	const saveCanvas = document.getElementById("saveCanvas");
+	const context = saveCanvas.getContext('2d');
+	saveCanvas.width = window.innerWidth;
+	saveCanvas.height = window.innerHeight;
+	
+	
+	function download() {
+		if(mode==0)	context.fillStyle = 'white';
+		else	context.fillStyle = 'black';
+		context.globalCompositeOperation = 'source-over';
+		context.clearRect(0, 0, saveCanvas.width, saveCanvas.height);
+		context.fillRect(0, 0, saveCanvas.width, saveCanvas.height);
+		context.drawImage(canvass,0,0);
+		var dt = saveCanvas.toDataURL('image/jpeg');
+		this.href = dt;
+		$("#save-popup").fadeIn(1000);
+	};
+	downloadLnk.addEventListener('click', download, false);
+		
+		
+	/*save.click(()=>{
 		var link = document.createElement('a');
 		link.setAttribute('download', 'amn.png');
-		link.setAttribute('href', document.getElementById("myCanvas").toDataURL("image/png").replace("image/png", "image/octet-stream"));
+		link.setAttribute('href', document.getElementById("myCanvas").toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream"));
 		link.click();
 		$("#save-popup").fadeIn(1000);
-	});
+	});*/
 	
 	$("#mode").click(()=>{
 		$("html").fadeOut(500);
@@ -86,8 +110,8 @@ $(document).ready(function(){
 		isPressed = true;
 		prevX = x;
 		prevY = y;
-		x = e.pageX - ctx.canvas.offsetLeft;
-        y = e.pageY - ctx.canvas.offsetTop;
+		x = e.pageX - canvass.offsetLeft;
+        y = e.pageY - canvass.offsetTop;
 	});
 
 	canvas.on("mouseup",(e)=>{
@@ -101,8 +125,8 @@ $(document).ready(function(){
 		if(isPressed){
 			e.preventDefault();
 			e.stopPropagation();
-			x = e.pageX - ctx.canvas.offsetLeft;
-			y = e.pageY - ctx.canvas.offsetTop;
+			x = e.pageX - canvass.offsetLeft;
+			y = e.pageY - canvass.offsetTop;
 			if(eraser==1){
 				removeCircle(x,y);
 				removeLine(prevX,prevY,x,y);
@@ -120,8 +144,8 @@ $(document).ready(function(){
 		isPressed = true;
 		prevX = x;
 		prevY = y;
-		x = e.touches[0].pageX - ctx.canvas.offsetLeft;
-		y = e.touches[0].pageY - ctx.canvas.offsetTop;
+		x = e.touches[0].pageX - canvass.offsetLeft;
+		y = e.touches[0].pageY - canvass.offsetTop;
 	});
 
 	canvas.on("touchend",(e)=>{
@@ -135,8 +159,8 @@ $(document).ready(function(){
 		if(isPressed){
 			e.preventDefault();
 			e.stopPropagation();
-			x = e.touches[0].pageX - ctx.canvas.offsetLeft;
-			y = e.touches[0].pageY - ctx.canvas.offsetTop;
+			x = e.touches[0].pageX - canvass.offsetLeft;
+			y = e.touches[0].pageY - canvass.offsetTop;
 			if(eraser==1){
 				removeCircle(x,y);
 				removeLine(prevX,prevY,x,y);
