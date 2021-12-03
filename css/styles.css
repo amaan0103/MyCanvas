@@ -73,6 +73,18 @@ body{
     top: 0;
 	z-index: 99;
 }
+#downloadLnk{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 100%;
+	height: 100%;
+	color: inherit;
+	text-decoration: none;
+}
+a:visited{
+	color: inherit;
+}
 #lower-toolbox{
 	position: fixed;
 	bottom: 0;
@@ -150,4 +162,7 @@ canvas{
 		width: 30vw;
 		height: 80vh;
 	}
+}
+#saveCanvas{
+	display: none;
 }
