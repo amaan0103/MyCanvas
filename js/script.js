@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	
 	$("#save-popup").hide();
-	$("#first-popup").fadeIn(1000);
+	
 	
 	let mode=0;
 	let size = 10;
@@ -23,15 +23,19 @@ $(document).ready(function(){
     canvass.width = window.innerWidth;
 	canvass.height = window.innerHeight;
 	
-	//function drawStuff(){
-	
-		
-		
 	const saveCanvas = document.getElementById("saveCanvas");
 	const context = saveCanvas.getContext('2d');
 	saveCanvas.width = window.innerWidth;
 	saveCanvas.height = window.innerHeight;
 	
+	if(screen.height<500){
+		$("#mode-icon").removeClass("fa-3x");
+		$("#mode-icon").addClass("fa-2x");
+	}
+	else{
+		$("#mode-icon").removeClass("fa-2x");
+		$("#mode-icon").addClass("fa-3x");
+	}
 	
 	function download() {
 		if(mode==0)	context.fillStyle = 'white';
@@ -45,15 +49,6 @@ $(document).ready(function(){
 		$("#save-popup").fadeIn(1000);
 	};
 	downloadLnk.addEventListener('click', download, false);
-		
-		
-	/*save.click(()=>{
-		var link = document.createElement('a');
-		link.setAttribute('download', 'amn.png');
-		link.setAttribute('href', document.getElementById("myCanvas").toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream"));
-		link.click();
-		$("#save-popup").fadeIn(1000);
-	});*/
 	
 	$("#mode").click(()=>{
 		$("html").fadeOut(500);
@@ -213,24 +208,25 @@ $(document).ready(function(){
 		ctx.closePath();
 	}
 
+	colorElement.click(()=>{
+		eraser=0;
+	});
 	colorElement.on("change",(e)=>{
 		color = e.target.value;
 		eraser = 0;
 	});
 
 	$("#eraser").click(()=>{
-		eraser = 1;
+		eraser = (eraser+1)%2;
 	});
 	
 	clearElement.click(()=>{
 		ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
 		eraser = 0;
 	});
-	//};
 	$("#save-close").click(()=>{
 		$("#save-popup").fadeOut(1000);
 	});
-	$("#first-close").click(()=>{
-		$("#first-popup").fadeOut(1000);
-	});
+	
+	
 });
