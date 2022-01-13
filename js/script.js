@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	
 	$("#save-popup").hide();
-	
+	$("#first-popup").fadeIn(1000);
 	
 	let mode=0;
 	let size = 10;
@@ -228,5 +228,8 @@ $(document).ready(function(){
 		$("#save-popup").fadeOut(1000);
 	});
 	
+	$("#first-close").click(()=>{
+		$("#first-popup").fadeOut(1000);
+	});
 	
 });
